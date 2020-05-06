@@ -6,7 +6,7 @@ import (
 	pb "github.com/Anarr/gomicrodev/proto/auth"
 	"github.com/google/uuid"
 	"github.com/micro/go-micro"
-	_ "github.com/micro/go-plugins/client/http"
+	"github.com/micro/go-plugins/client/http"
 	"github.com/pkg/errors"
 	"log"
 )

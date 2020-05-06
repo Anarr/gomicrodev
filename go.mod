@@ -8,5 +8,6 @@ require (
 	github.com/micro/cli/v2 v2.1.2
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-micro/v2 v2.6.0
+	github.com/micro/go-plugins/client/http v0.0.0-20200119172437-4fe21aa238fd // indirect
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a
 )
