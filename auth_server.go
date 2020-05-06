@@ -16,12 +16,23 @@ type Auth struct{}
 
 func (a *Auth) Login(ctx context.Context, req *pb.AuthRequest, res *pb.AuthResponse) error {
 
-	if req.Email == "" || req.Password == "" {
-		return errors.New(ErrValidation)
+	if err := a.Validate(ctx, req, &pb.ValidationResponse{}); err != nil {
+		return err
 	}
 
 	res.IsLoggedIn = true
 	res.SessionId = uuid.New().String()
+	return nil
+}
+
+func (a *Auth) Validate(ctx context.Context, req *pb.AuthRequest, res *pb.ValidationResponse) error {
+	if req.Email == "" || req.Password == "" {
+		res.IsOk = false
+		log.Println("validation err", res)
+		return errors.New(ErrValidation)
+	}
+
+	res.IsOk = true
 	return nil
 }
 
@@ -31,12 +42,14 @@ func runAuthClient(service micro.Service) {
 
 	req := &pb.AuthRequest{
 		Email:    "anar.rzayev94@gmail.com",
-		Password: "123456789",
+		Password: "124",
 	}
 	res, err := client.Login(context.Background(), req)
 
 	if err != nil {
-		log.Fatal("can not login user")
+		log.Println("login responses", res)
+		log.Fatal("login action finished with err: ", err)
+
 	}
 
 	fmt.Println("User Logged in sucessfully", res)
