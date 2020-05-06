@@ -6,6 +6,7 @@ import (
 	pb "github.com/Anarr/gomicrodev/proto/auth"
 	"github.com/google/uuid"
 	"github.com/micro/go-micro"
+	_ "github.com/micro/go-plugins/client/http"
 	"github.com/pkg/errors"
 	"log"
 )
@@ -58,6 +59,7 @@ func runAuthClient(service micro.Service) {
 func main() {
 	service := micro.NewService(
 		micro.Name("auth"),
+		micro.Client(http.NewClient()),
 	)
 
 	//run client
