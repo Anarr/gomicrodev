@@ -63,6 +63,9 @@ func greetingHandler(writer http.ResponseWriter, req *http.Request) {
 func main() {
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/greeting", greetingHandler)
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		writer.Write([]byte("microservices"))
+	})
 	if err := http.ListenAndServe(listenAddr, nil); err !=nil {
 		log.Fatal("Web server down")
 	}
