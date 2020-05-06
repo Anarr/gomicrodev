@@ -42,7 +42,7 @@ func (ps *PostService) Delete(ctx context.Context, req *pb.PostDeleteRequest, re
 		return errors.New(ErrEmptyPosts)
 	}
 
-	posts = append(posts[:req.PostId], post[req.PostId+1:]...)
+	posts = append(posts[:req.PostId], posts[req.PostId+1:]...)
 
 	res.Status = true
 	return nil
