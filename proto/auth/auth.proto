@@ -10,6 +10,11 @@ message AuthResponse {
     string session_id = 2;
 }
 
+message ValidationResponse {
+    bool IsOk = 1;
+}
+
 service AuthService {
     rpc Login(AuthRequest) returns(AuthResponse);
+    rpc Validate(AuthRequest) returns(ValidationResponse);
 }

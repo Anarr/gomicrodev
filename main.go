@@ -19,8 +19,8 @@ func (g *Greeter) Hello(ctx context.Context, req *pb.Request, res *pb.Response) 
 	res.Greeting = "Hello," + req.Name
 	return nil
 }
-//setup client
 
+//setup client
 func runClient(service micro.Service) {
 	//create new greeter client
 	client := pb.NewGreeterClient("greeter", service.Client())
@@ -40,8 +40,9 @@ func main() {
 			"for": "test reason",
 		}),
 	)
-	//fmt.Println("Try request to server")
-	//runClient(service)
+	fmt.Println("Try request to greeter server")
+	runClient(service)
+	return
 
 	// By default we'll run the server unless the flags catch us
 
