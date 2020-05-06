@@ -1,28 +1,30 @@
 package main
 
 import (
-	pb "github.com/Anarr/proto"
 	"context"
 	"fmt"
-	"github.com/labstack/gommon/log"
-	"github.com/micro/cli"
+	pb "github.com/Anarr/gomicrodev/proto/greeter"
 	"github.com/micro/go-micro"
-	"os"
+	"log"
 )
 
+const (
+	ValidationErr = "email and password are required"
+)
+
+//Define greeter service methods
 type Greeter struct{}
 
 func (g *Greeter) Hello(ctx context.Context, req *pb.Request, res *pb.Response) error {
 	res.Greeting = "Hello," + req.Name
 	return nil
 }
-
 //setup client
 
 func runClient(service micro.Service) {
 	//create new greeter client
 	client := pb.NewGreeterClient("greeter", service.Client())
-	res, err := client.Hello(context.Background(), &pb.Request{Name:"Anar"})
+	res, err := client.Hello(context.Background(), &pb.Request{Name: "Anar"})
 	if err != nil {
 		log.Fatal("Client err", err)
 	}
@@ -35,23 +37,11 @@ func main() {
 		micro.Name("greeter"),
 		micro.Version("latest"),
 		micro.Metadata(map[string]string{
-			"for":"test reason",
-		}),
-		micro.Flags(&cli.BoolFlag{
-			Name: "run_client",
-			Usage: "Launch client",
+			"for": "test reason",
 		}),
 	)
-
-	service.Init(
-		micro.Action(func(c *cli.Context) error {
-			if c.Bool("run_client") {
-				runClient(service)
-				os.Exit(0)
-			}
-			return nil
-		}),
-	)
+	//fmt.Println("Try request to server")
+	//runClient(service)
 
 	// By default we'll run the server unless the flags catch us
 
@@ -60,6 +50,6 @@ func main() {
 	pb.RegisterGreeterHandler(service.Server(), new(Greeter))
 
 	if err := service.Run(); err != nil {
-		log.Fatal("Error while running server:", err)
+		log.Fatal("Error occurs during running greeting server", err)
 	}
 }

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+message AuthRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message AuthResponse {
+    bool is_logged_in = 1;
+    string session_id = 2;
+}
+
+service AuthService {
+    rpc Login(AuthRequest) returns(AuthResponse);
+}
