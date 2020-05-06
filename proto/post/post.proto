@@ -3,7 +3,7 @@ syntax = "proto3";
 message Post {
     int64 id = 1;
     int64 user_id = 2;
-    int64 description = 3;
+    string description = 3;
     string created_at = 4;
 }
 

@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"context"
 	"errors"
 	pb "github.com/Anarr/gomicrodev/proto/post"
@@ -42,7 +42,7 @@ func (ps *PostService) Delete(ctx context.Context, req *pb.PostDeleteRequest, re
 		return errors.New(ErrEmptyPosts)
 	}
 
-	posts = append(posts[:req.Id], post[req.Id+1:]...)
+	posts = append(posts[:req.PostId], post[req.PostId+1:]...)
 
 	res.Status = true
 	return nil
