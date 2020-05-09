@@ -28,7 +28,6 @@ func Serve() error {
 	pb.RegisterGreeterHandler(service.Server(), new(Greeter))
 
 	if err := service.Run(); err != nil {
-		log.Println("Error occurs during running greeting server", err)
 		return err
 	}
 

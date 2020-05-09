@@ -5,7 +5,6 @@ import (
 	"errors"
 	pb "github.com/Anarr/gomicrodev/proto/post"
 	"github.com/micro/go-micro"
-	"log"
 )
 
 var lastID int64
@@ -61,7 +60,7 @@ func (ps *PostService) Delete(ctx context.Context, req *pb.PostDeleteRequest, re
 	return errors.New(ErrInvalidPostDeleteRequest)
 }
 
-func Serve() {
+func Serve() error {
 	service := micro.NewService(
 		micro.Name("post"),
 	)
@@ -69,6 +68,8 @@ func Serve() {
 	pb.RegisterPostServiceHandler(service.Server(), new(PostService))
 
 	if err := service.Run(); err != nil {
-		log.Fatal("error occurs during running post service", err)
+		return err
 	}
+
+	return nil
 }

@@ -1,5 +1,5 @@
 .idea/
-greeting_server
+greeter_server
 auth_server
 web_server
 post_server

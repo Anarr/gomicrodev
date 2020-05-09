@@ -35,7 +35,7 @@ func (a *Auth) Validate(ctx context.Context, req *pb.AuthRequest, res *pb.Valida
 	return nil
 }
 
-func Serve() {
+func Serve() error {
 	service := micro.NewService(
 		micro.Name("auth"),
 	)
@@ -43,6 +43,8 @@ func Serve() {
 	pb.RegisterAuthServiceHandler(service.Server(), new(Auth))
 
 	if err := service.Run(); err != nil {
-		log.Fatal("Error occurs while running auth server", err)
+		return err
 	}
+
+	return nil
 }
