@@ -1,22 +1,24 @@
 package main
 
 import (
-	u "github.com/Anarr/gomicrodev/proto/user"
-	"github.com/micro/go-micro"
 	"log"
+	"net"
+	u "github.com/Anarr/gomicrodev/proto/user"
+	"google.golang.org/grpc"
 )
 
 type UserService struct{}
 
 func main() {
-	service := micro.NewService(
-		micro.Name("user"),
-	)
-
-	u.RegisterUserServiceHandler(service.Server(), new(UserService))
-
-	if err := service.Run(); err != nil {
+	list, err := net.Listen("tcp",":90909")
+	if err != nil {
 		log.Fatal(err)
 	}
 
+	server := grpc.NewServer()
+	u.RegisterUserServiceHandler(server, new(UserService))
+
+	if err = server.Serve(list); err != nil {
+		log.Fatal(err)
+	}
 }

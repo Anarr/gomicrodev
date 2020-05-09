@@ -1,5 +1,4 @@
 syntax = "proto3";
-package user;
 
 message AllRequest{
     string q  = 1;

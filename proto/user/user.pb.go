@@ -4,15 +4,13 @@
 package user
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
-)
-
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -254,11 +252,11 @@ func (m *AllResponse) GetUsers() []*User {
 }
 
 func init() {
-	proto.RegisterType((*AllRequest)(nil), "user.AllRequest")
-	proto.RegisterType((*UploadRequest)(nil), "user.UploadRequest")
-	proto.RegisterType((*GetUserRequest)(nil), "user.GetUserRequest")
-	proto.RegisterType((*User)(nil), "user.User")
-	proto.RegisterType((*AllResponse)(nil), "user.AllResponse")
+	proto.RegisterType((*AllRequest)(nil), "AllRequest")
+	proto.RegisterType((*UploadRequest)(nil), "UploadRequest")
+	proto.RegisterType((*GetUserRequest)(nil), "GetUserRequest")
+	proto.RegisterType((*User)(nil), "User")
+	proto.RegisterType((*AllResponse)(nil), "AllResponse")
 }
 
 func init() {
@@ -266,170 +264,210 @@ func init() {
 }
 
 var fileDescriptor_9b283a848145d6b7 = []byte{
-	// 295 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x91, 0xc1, 0x4e, 0xbb, 0x40,
-	0x10, 0xc6, 0xb3, 0x40, 0x9b, 0xff, 0x7f, 0xa0, 0x8d, 0x8e, 0x9a, 0x10, 0x2e, 0x22, 0x1e, 0x24,
-	0x9a, 0xb4, 0x49, 0x7d, 0x82, 0x5e, 0xec, 0xd5, 0x60, 0x7a, 0x6e, 0x2a, 0x4c, 0xcd, 0x26, 0x2b,
-	0x0b, 0x2c, 0xd5, 0x77, 0xf0, 0xe2, 0x2b, 0x9b, 0x1d, 0x40, 0xd1, 0x0b, 0x99, 0xf9, 0x7e, 0x5f,
-	0x66, 0x98, 0x6f, 0xe1, 0xa2, 0x6a, 0x74, 0xab, 0x97, 0x47, 0x43, 0x0d, 0x7f, 0x16, 0xdc, 0xa3,
-	0x67, 0xeb, 0x24, 0x02, 0x58, 0x2b, 0x95, 0x51, 0x7d, 0x24, 0xd3, 0x62, 0x00, 0xa2, 0x0e, 0x45,
-	0x2c, 0xd2, 0xff, 0x99, 0xa8, 0x93, 0x6b, 0x98, 0x6d, 0x2b, 0xa5, 0xf7, 0xc5, 0x80, 0x11, 0xbc,
-	0x83, 0x54, 0xc4, 0x8e, 0x20, 0xe3, 0x3a, 0x89, 0x61, 0xbe, 0xa1, 0x76, 0x6b, 0xa8, 0x19, 0x5c,
-	0x73, 0x70, 0x64, 0xc1, 0x1e, 0x37, 0x73, 0x64, 0x91, 0x7c, 0x08, 0xf0, 0x2c, 0xff, 0x0b, 0xec,
-	0xb8, 0x72, 0xff, 0x4a, 0xa1, 0xc3, 0x0b, 0xb9, 0xc6, 0x08, 0xfe, 0xd9, 0xff, 0x62, 0xdd, 0x65,
-	0xfd, 0xbb, 0xc7, 0x4b, 0xf0, 0xab, 0x46, 0xdb, 0xad, 0xbb, 0x4a, 0xe6, 0xa1, 0xc7, 0x18, 0x7a,
-	0xe9, 0x51, 0xe6, 0x78, 0x05, 0x81, 0x34, 0xbb, 0x83, 0x56, 0x4a, 0xbf, 0xcb, 0xf2, 0x25, 0x9c,
-	0xc4, 0x22, 0x9d, 0x65, 0xbe, 0x34, 0x0f, 0x83, 0x94, 0x2c, 0xc1, 0xe7, 0x7b, 0x4d, 0xa5, 0x4b,
-	0x43, 0x18, 0xc3, 0xc4, 0x8e, 0x37, 0xa1, 0x88, 0xdd, 0xd4, 0x5f, 0xc1, 0x82, 0x03, 0xe2, 0x6b,
-	0x3a, 0xb0, 0xfa, 0x14, 0xe0, 0xdb, 0xfe, 0x89, 0x9a, 0x37, 0x99, 0x13, 0xde, 0x82, 0xbb, 0x56,
-	0x0a, 0x4f, 0x3a, 0xe7, 0x4f, 0x76, 0xd1, 0xe9, 0x48, 0xe9, 0xa7, 0xdf, 0x80, 0xbb, 0xa1, 0x16,
-	0xcf, 0x3b, 0xf2, 0x3b, 0xa6, 0x68, 0xb4, 0x0b, 0xef, 0x60, 0xda, 0x25, 0x8d, 0x67, 0xbd, 0x3a,
-	0xce, 0x7d, 0x6c, 0x4d, 0xc5, 0xf3, 0x94, 0xdf, 0xef, 0xfe, 0x2b, 0x00, 0x00, 0xff, 0xff, 0x6b,
-	0x12, 0x6e, 0xa7, 0xd8, 0x01, 0x00, 0x00,
+	// 282 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x51, 0xcd, 0x4a, 0xc3, 0x40,
+	0x10, 0x66, 0xf3, 0x53, 0x74, 0x36, 0x8d, 0xb0, 0x20, 0x84, 0x88, 0x98, 0xc6, 0x4b, 0xf0, 0xb0,
+	0x42, 0x7d, 0x82, 0x5e, 0xec, 0x55, 0x22, 0x3d, 0x97, 0x9a, 0x4c, 0x65, 0x61, 0xcd, 0x26, 0xd9,
+	0x54, 0xdf, 0xc1, 0xa7, 0x96, 0x9d, 0x34, 0x6a, 0x7b, 0x09, 0xf3, 0xfd, 0xf0, 0x4d, 0xe6, 0x5b,
+	0xb8, 0x6e, 0x7b, 0x33, 0x98, 0xc7, 0x83, 0xc5, 0x9e, 0x3e, 0x92, 0x70, 0x9e, 0x02, 0xac, 0xb4,
+	0x2e, 0xb1, 0x3b, 0xa0, 0x1d, 0x44, 0x04, 0xac, 0x4b, 0x58, 0xc6, 0x8a, 0xcb, 0x92, 0x75, 0xf9,
+	0x3d, 0xcc, 0x37, 0xad, 0x36, 0xbb, 0x7a, 0x92, 0x05, 0x04, 0x7b, 0xa5, 0x91, 0x1c, 0x51, 0x49,
+	0x73, 0x9e, 0x41, 0xbc, 0xc6, 0x61, 0x63, 0xb1, 0x9f, 0x5c, 0x31, 0x78, 0xaa, 0x26, 0x8f, 0x5f,
+	0x7a, 0xaa, 0xce, 0xbf, 0x19, 0x04, 0x4e, 0x3f, 0x17, 0x5c, 0x5c, 0xb3, 0xfb, 0xc0, 0xc4, 0xa3,
+	0x85, 0x34, 0x8b, 0x14, 0x2e, 0xdc, 0xdf, 0x11, 0xef, 0x13, 0xff, 0x8b, 0xc5, 0x1d, 0xf0, 0xb6,
+	0x37, 0x6e, 0xeb, 0xb6, 0x55, 0x55, 0x12, 0x90, 0x0c, 0x47, 0xea, 0x45, 0x55, 0x62, 0x01, 0x91,
+	0xb2, 0xdb, 0xbd, 0xd1, 0xda, 0x7c, 0xa9, 0xe6, 0x3d, 0x09, 0x33, 0x56, 0xcc, 0x4b, 0xae, 0xec,
+	0xf3, 0x44, 0xe5, 0x0f, 0xc0, 0xe9, 0x5e, 0xdb, 0x9a, 0xc6, 0xa2, 0xb8, 0x81, 0xd0, 0xc5, 0xdb,
+	0x84, 0x65, 0x7e, 0xc1, 0x97, 0xa1, 0xa4, 0x43, 0x46, 0x6e, 0xd9, 0x01, 0x77, 0xf0, 0x15, 0xfb,
+	0x4f, 0x55, 0xa1, 0xc8, 0xc0, 0x5f, 0x69, 0x2d, 0xb8, 0xfc, 0x2b, 0x2c, 0x8d, 0xe4, 0xff, 0xb4,
+	0x5b, 0xf0, 0xd7, 0x38, 0x88, 0x2b, 0x79, 0xda, 0x48, 0x3a, 0xc6, 0x8a, 0x05, 0xcc, 0xc6, 0x3e,
+	0x45, 0x2c, 0x4f, 0x8a, 0x3d, 0x1a, 0x0a, 0xf6, 0x36, 0xa3, 0x57, 0x79, 0xfa, 0x09, 0x00, 0x00,
+	0xff, 0xff, 0xe8, 0x65, 0xb0, 0xe0, 0xae, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ client.Option
-var _ server.Option
+var _ grpc.ClientConnInterface
 
-// Client API for UserService service
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion6
 
+// UserServiceClient is the client API for UserService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type UserServiceClient interface {
-	All(ctx context.Context, in *AllRequest, opts ...client.CallOption) (*AllResponse, error)
-	Get(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*User, error)
-	Upload(ctx context.Context, opts ...client.CallOption) (UserService_UploadClient, error)
+	All(ctx context.Context, in *AllRequest, opts ...grpc.CallOption) (*AllResponse, error)
+	Get(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error)
+	Upload(ctx context.Context, opts ...grpc.CallOption) (UserService_UploadClient, error)
 }
 
 type userServiceClient struct {
-	c           client.Client
-	serviceName string
+	cc grpc.ClientConnInterface
 }
 
-func NewUserServiceClient(serviceName string, c client.Client) UserServiceClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "user"
-	}
-	return &userServiceClient{
-		c:           c,
-		serviceName: serviceName,
-	}
+func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
+	return &userServiceClient{cc}
 }
 
-func (c *userServiceClient) All(ctx context.Context, in *AllRequest, opts ...client.CallOption) (*AllResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "UserService.All", in)
+func (c *userServiceClient) All(ctx context.Context, in *AllRequest, opts ...grpc.CallOption) (*AllResponse, error) {
 	out := new(AllResponse)
-	err := c.c.Call(ctx, req, out, opts...)
+	err := c.cc.Invoke(ctx, "/UserService/All", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userServiceClient) Get(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*User, error) {
-	req := c.c.NewRequest(c.serviceName, "UserService.Get", in)
+func (c *userServiceClient) Get(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.c.Call(ctx, req, out, opts...)
+	err := c.cc.Invoke(ctx, "/UserService/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userServiceClient) Upload(ctx context.Context, opts ...client.CallOption) (UserService_UploadClient, error) {
-	req := c.c.NewRequest(c.serviceName, "UserService.Upload", &UploadRequest{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *userServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (UserService_UploadClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_UserService_serviceDesc.Streams[0], "/UserService/Upload", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return &userServiceUploadClient{stream}, nil
+	x := &userServiceUploadClient{stream}
+	return x, nil
 }
 
 type UserService_UploadClient interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
 	Send(*UploadRequest) error
+	CloseAndRecv() (*User, error)
+	grpc.ClientStream
 }
 
 type userServiceUploadClient struct {
-	stream client.Streamer
-}
-
-func (x *userServiceUploadClient) Close() error {
-	return x.stream.Close()
-}
-
-func (x *userServiceUploadClient) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *userServiceUploadClient) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
+	grpc.ClientStream
 }
 
 func (x *userServiceUploadClient) Send(m *UploadRequest) error {
-	return x.stream.Send(m)
+	return x.ClientStream.SendMsg(m)
 }
 
-// Server API for UserService service
-
-type UserServiceHandler interface {
-	All(context.Context, *AllRequest, *AllResponse) error
-	Get(context.Context, *GetUserRequest, *User) error
-	Upload(context.Context, UserService_UploadStream) error
-}
-
-func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&UserService{hdlr}, opts...))
-}
-
-type UserService struct {
-	UserServiceHandler
-}
-
-func (h *UserService) All(ctx context.Context, in *AllRequest, out *AllResponse) error {
-	return h.UserServiceHandler.All(ctx, in, out)
-}
-
-func (h *UserService) Get(ctx context.Context, in *GetUserRequest, out *User) error {
-	return h.UserServiceHandler.Get(ctx, in, out)
-}
-
-func (h *UserService) Upload(ctx context.Context, stream server.Streamer) error {
-	return h.UserServiceHandler.Upload(ctx, &userServiceUploadStream{stream})
-}
-
-type UserService_UploadStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Recv() (*UploadRequest, error)
-}
-
-type userServiceUploadStream struct {
-	stream server.Streamer
-}
-
-func (x *userServiceUploadStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *userServiceUploadStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *userServiceUploadStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *userServiceUploadStream) Recv() (*UploadRequest, error) {
-	m := new(UploadRequest)
-	if err := x.stream.Recv(m); err != nil {
+func (x *userServiceUploadClient) CloseAndRecv() (*User, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(User)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
+}
+
+// UserServiceServer is the server API for UserService service.
+type UserServiceServer interface {
+	All(context.Context, *AllRequest) (*AllResponse, error)
+	Get(context.Context, *GetUserRequest) (*User, error)
+	Upload(UserService_UploadServer) error
+}
+
+// UnimplementedUserServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedUserServiceServer struct {
+}
+
+func (*UnimplementedUserServiceServer) All(ctx context.Context, req *AllRequest) (*AllResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method All not implemented")
+}
+func (*UnimplementedUserServiceServer) Get(ctx context.Context, req *GetUserRequest) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (*UnimplementedUserServiceServer) Upload(srv UserService_UploadServer) error {
+	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
+}
+
+func RegisterUserServiceServer(s *grpc.Server, srv UserServiceServer) {
+	s.RegisterService(&_UserService_serviceDesc, srv)
+}
+
+func _UserService_All_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AllRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).All(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserService/All",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).All(ctx, req.(*AllRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserService/Get",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).Get(ctx, req.(*GetUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(UserServiceServer).Upload(&userServiceUploadServer{stream})
+}
+
+type UserService_UploadServer interface {
+	SendAndClose(*User) error
+	Recv() (*UploadRequest, error)
+	grpc.ServerStream
+}
+
+type userServiceUploadServer struct {
+	grpc.ServerStream
+}
+
+func (x *userServiceUploadServer) SendAndClose(m *User) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *userServiceUploadServer) Recv() (*UploadRequest, error) {
+	m := new(UploadRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+var _UserService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "UserService",
+	HandlerType: (*UserServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "All",
+			Handler:    _UserService_All_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _UserService_Get_Handler,
+		},
+	},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Upload",
+			Handler:       _UserService_Upload_Handler,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "proto/user/user.proto",
 }
