@@ -1,0 +1,32 @@
+syntax = "proto3";
+package user;
+
+message AllRequest{
+    string q  = 1;
+}
+
+message UploadRequest{
+    bytes file = 1;
+}
+
+message GetUserRequest {
+    int64 id = 1;
+}
+
+message User {
+    int64 id = 1;
+    string name = 2;
+    string username = 3;
+    string profile_pic = 4;
+    uint32 is_following = 5;
+}
+
+message AllResponse {
+    repeated User users = 1;
+}
+
+service UserService{
+    rpc All(AllRequest) returns(AllResponse);
+    rpc Get(GetUserRequest) returns(User);
+    rpc Upload(stream UploadRequest) returns(User);
+}
