@@ -1,4 +1,4 @@
-package authservice
+package main
 
 import (
 	"context"
@@ -35,7 +35,7 @@ func (a *Auth) Validate(ctx context.Context, req *pb.AuthRequest, res *pb.Valida
 	return nil
 }
 
-func Serve() error {
+func main() {
 	service := micro.NewService(
 		micro.Name("auth"),
 	)
@@ -43,8 +43,6 @@ func Serve() error {
 	pb.RegisterAuthServiceHandler(service.Server(), new(Auth))
 
 	if err := service.Run(); err != nil {
-		return err
+		log.Println("Auth server error", err)
 	}
-
-	return nil
 }
