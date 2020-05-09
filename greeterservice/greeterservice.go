@@ -4,7 +4,6 @@ import (
 	"context"
 	pb "github.com/Anarr/gomicrodev/proto/greeter"
 	"github.com/micro/go-micro"
-	"log"
 )
 
 //Define greeter service methods

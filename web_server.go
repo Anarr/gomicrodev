@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"github.com/Anarrr/gomicrodev/webservice"
+	"github.com/Anarr/gomicrodev/webservice"
 )
 
 func main() {

@@ -8,7 +8,6 @@ import (
 	gr "github.com/Anarr/gomicrodev/proto/greeter"
 	ps "github.com/Anarr/gomicrodev/proto/post"
 	"github.com/micro/go-micro"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
