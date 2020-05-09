@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Anarr/go-micro/greeterservice"
+	"github.com/Anarr/gomicrodev/greeterservice"
 	"log"
 )
 
