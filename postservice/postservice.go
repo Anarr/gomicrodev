@@ -1,4 +1,4 @@
-package main
+package postservice
 
 import (
 	"context"
@@ -12,7 +12,6 @@ var lastID int64
 var posts []*pb.Post
 
 const (
-	ErrPostCreate = "can not create post"
 	ErrEmptyPosts = "there is no available posts"
 	ErrInvalidPostDeleteRequest = "request data is invalid"
 )
@@ -40,7 +39,7 @@ func (ps *PostService) Create(ctx context.Context, req *pb.PostCreateRequest, re
 func (ps *PostService) Delete(ctx context.Context, req *pb.PostDeleteRequest, res *pb.PostDeleteResponse) error {
 
 	deletedIndex := -1
-	
+
 	if len(posts) == 0 {
 		res.Status = false
 		return errors.New(ErrEmptyPosts)
@@ -62,7 +61,7 @@ func (ps *PostService) Delete(ctx context.Context, req *pb.PostDeleteRequest, re
 	return errors.New(ErrInvalidPostDeleteRequest)
 }
 
-func main() {
+func Serve() {
 	service := micro.NewService(
 		micro.Name("post"),
 	)

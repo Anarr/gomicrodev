@@ -10,6 +10,7 @@ import (
 	"github.com/micro/go-micro"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -88,11 +89,33 @@ func postsHandler(writer http.ResponseWriter, req *http.Request) {
 
 		r := &ps.PostCreateRequest{
 			UserId:      1,
-			Description: req.URL.Query().Get("desc"),
+			Description: req.URL.Query().Get("description"),
 			CreatedAt:   time.Now().String(),
 		}
 
 		res, err := client.Create(context.Background(), r)
+
+		writer.Header().Add("Content-type", "application/json")
+		writer.WriteHeader(http.StatusOK)
+
+		if err != nil {
+			fmt.Fprint(writer, err)
+			return
+		}
+
+		post, _ := json.Marshal(res)
+
+		writer.Write(post)
+
+	case "delete":
+		client := ps.NewPostServiceClient("post", postService.Client())
+		postId, _ := strconv.Atoi(req.URL.Query().Get("post_id"))
+		r := &ps.PostDeleteRequest{
+			UserId:      1,
+			PostId: int64(postId),
+		}
+
+		res, err := client.Delete(context.Background(), r)
 
 		writer.Header().Add("Content-type", "application/json")
 		writer.WriteHeader(http.StatusOK)
