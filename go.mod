@@ -3,7 +3,7 @@ module github.com/Anarr/gomicrodev
 go 1.14
 
 require (
-	github.com/golang/protobuf v1.3.5
+	github.com/golang/protobuf v1.4.1
 	github.com/google/uuid v1.1.1
 	github.com/labstack/gommon v0.3.0
 	github.com/micro/cli/v2 v2.1.2
