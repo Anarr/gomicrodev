@@ -28,5 +28,5 @@ message AllResponse {
 service UserService{
     rpc All(AllRequest) returns(AllResponse);
     rpc Get(GetUserRequest) returns(User);
-    rpc Upload(stream UploadRequest) returns(User);
+    rpc Upload(UploadRequest) returns(User);
 }
