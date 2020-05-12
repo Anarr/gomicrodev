@@ -7,10 +7,7 @@ import (
 	au "github.com/Anarr/gomicrodev/proto/auth"
 	gr "github.com/Anarr/gomicrodev/proto/greeter"
 	ps "github.com/Anarr/gomicrodev/proto/post"
-	u "github.com/Anarr/gomicrodev-userservice/proto/user"
 	"github.com/micro/go-micro"
-	"google.golang.org/grpc"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -22,7 +19,7 @@ var (
 	asc au.AuthServiceClient
 	gsc gr.GreeterClient
 	psc ps.PostServiceClient
-	userClient u.UserServiceClient
+	//userClient u.UserServiceClient
 )
 
 var listenAddr = ":8080"
@@ -45,19 +42,6 @@ func init()  {
 	asc = au.NewAuthServiceClient("auth", authService.Client())
 	gsc = gr.NewGreeterClient("greeter", greetingService.Client())
 	psc = ps.NewPostServiceClient("post", postService.Client())
-}
-
-//init initalize user service client
-func init()  {
-	conn, err := grpc.Dial(":9000")
-
-	if err != nil {
-		log.Println("User service down", err)
-	}
-
-	defer conn.Close()
-
-	userClient = u.NewUserServiceClient(conn)
 }
 
 func loginHandler(writer http.ResponseWriter, req *http.Request) {
@@ -162,20 +146,7 @@ func postsHandler(writer http.ResponseWriter, req *http.Request) {
 }
 
 func usersHandler(writer http.ResponseWriter, _ *http.Request) {
-	users, err := userClient.All(context.Background(), &u.AllRequest{})
 
-	writer.Header().Add("Content-type", "application/json")
-	writer.WriteHeader(http.StatusOK)
-
-	if err != nil {
-		fmt.Fprint(writer, err)
-		return
-	}
-
-	j,_ := json.Marshal(users)
-
-	writer.Write(j)
-	return
 }
 
 func Serve() error {
