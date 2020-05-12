@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/coreos/etcd v3.3.20+incompatible // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
-	github.com/envoyproxy/go-control-plane v0.9.4 // indirect
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/mock v1.3.1 // indirect
@@ -29,7 +28,8 @@ require (
 	golang.org/x/sys v0.0.0-20200511232937-7e40ca221e25 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
 	golang.org/x/tools v0.0.0-20200512001501-aaeff5de670a // indirect
-	google.golang.org/grpc v1.26.0
+	google.golang.org/genproto v0.0.0-20200511104702-f5ebc3bea380 // indirect
+	google.golang.org/grpc v1.29.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 	honnef.co/go/tools v0.0.1-2020.1.3 // indirect
